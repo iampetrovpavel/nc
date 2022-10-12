@@ -1,3 +1,7 @@
+#custom
+serviceAccountKey.json
+.env.*
+
 # Logs
 logs
 *.log

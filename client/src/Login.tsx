@@ -1,43 +1,64 @@
-import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
+import { RecaptchaVerifier, signInWithPhoneNumber, PhoneAuthProvider, ConfirmationResult } from 'firebase/auth';
 import { useEffect, useRef, useState } from 'react';
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useNavigate } from 'react-router-dom'
-import { auth, getConfirmationCode } from './firebase'
+import { loginUser } from './api/user';
+import { auth } from './firebase'
+
+//+358415708221
+
+let confirmationResult: ConfirmationResult | null = null
+let recaptchaVerifier: any = null
 
 const Login = () => {
     const [phone, setPhone] = useState("+79500424342")
+    const [code, setCode] = useState("123456")
+    const [verified, setVerified] = useState(false)
     const [user, loading, error] = useAuthState(auth)
     const navigate = useNavigate()
-    const recaptchaVerifier = useRef<RecaptchaVerifier>(null)
     const loginBtn = useRef<HTMLButtonElement>(null)
-    const reCaptcha = useRef<HTMLDivElement>(null)
     useEffect(() => {
         if (loading) {
             return
         }
         if (user) navigate("/profile")
-    }, [user, loading])
+    }, [user, loading, navigate])
+
+    async function signUp(){
+        console.log("RECAPTCHA VERIFER", recaptchaVerifier)
+        console.log("PHONE ", phone)
+        confirmationResult = await signInWithPhoneNumber(auth, phone, recaptchaVerifier)
+    }
+
     useEffect(()=>{
-        if(!recaptchaVerifier.current) {
-            if(!reCaptcha.current) return
-            if(!loginBtn.current) return
-            console.log("LOGIN BUTTON ", loginBtn.current)
-            const rv = new RecaptchaVerifier(loginBtn.current, 
-                {
-                    'size': 'invisible',
-                    'callback': async () => {
-                        console.log("CAPTCHA SOLVED")
-                        const confirmationResult = await signInWithPhoneNumber(auth, phone, rv)
-                        console.log("CONFIRMATION RESULT", confirmationResult)
-                        const result = await confirmationResult.confirm("123456")
-                        console.log("RESULT ", result)
-                    }
-                }, 
-                auth
-            )
-            rv.render()
-        }
+        if(!verified)return
+        signUp()
+    }, [verified])
+
+    async function initCaptcha() {
+        if(!loginBtn.current) return
+        recaptchaVerifier = new RecaptchaVerifier(loginBtn.current, 
+            {
+                'size': 'invisible',
+                'callback': async () => { setVerified(true) }
+            }, 
+            auth
+        )
+        recaptchaVerifier.render()
+    }
+
+    useEffect(()=>{
+        initCaptcha()
     }, [])
+    async function handleConfirm() {
+        if(!code || code.length !== 6) return alert("Code not valid")
+        if(!confirmationResult) return alert("You have to send a code")
+        try {
+            await confirmationResult.confirm(code)
+        } catch(e) {
+            return alert("Wrong code")
+        }
+    }
     return (
         <div className="login">
             <div className="login__container">
@@ -48,15 +69,24 @@ const Login = () => {
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="Phone"
                 />
-                <div ref={reCaptcha}>
-
-                </div>
                 <button
                     className="login__btn"
                     ref={ loginBtn }
-                    // onClick={ handleSendCode }
                 >
                     Send code
+                </button>
+                <input
+                    type="text"
+                    className="login__textBox"
+                    value={code}
+                    onChange={(e) => setCode(e.target.value)}
+                    placeholder="code"
+                />
+                <button
+                    className="login__btn"
+                    onClick={ handleConfirm }
+                >
+                    Login
                 </button>
             </div>
         </div>

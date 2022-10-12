@@ -4,7 +4,8 @@ import {
     signInWithPhoneNumber,
     signOut,
     ConfirmationResult,
-    ApplicationVerifier
+    ApplicationVerifier,
+    PhoneAuthProvider
 } from "firebase/auth"
 import {
     getFirestore,
@@ -28,19 +29,19 @@ const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
 // auth.languageCode = 'en'
 
-console.log("AUTH ", auth)
+// console.log("AUTH ", auth)
 
-const db = getFirestore(app)
+// const db = getFirestore(app)
 
-const getConfirmationCode = async (phone: string, appVerifier: ApplicationVerifier) => {
-    try {
-        const confirmationResult = await signInWithPhoneNumber(auth, phone, appVerifier)
-        return confirmationResult
-    } catch (err: any) {
-        console.error(err)
-        alert(err?.message)
-    }
-}
+// const getConfirmationCode = async (phone: string, appVerifier: ApplicationVerifier) => {
+//     try {
+//         const confirmationResult = await signInWithPhoneNumber(auth, phone, appVerifier)
+//         return confirmationResult
+//     } catch (err: any) {
+//         console.error(err)
+//         alert(err?.message)
+//     }
+// }
 
 const signInWithPhone = async (confirmationResult: ConfirmationResult, code: string) => {
     try {
@@ -57,6 +58,6 @@ const logout = () => {
     signOut(auth);
 }
 
-export { getConfirmationCode, signInWithPhone, logout, auth}
+export {  signInWithPhone, logout, auth}
 
 

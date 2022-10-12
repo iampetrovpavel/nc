@@ -1,0 +1,11 @@
+###
+POST http://localhost:8000/api/login
+Content-Type: application/json
+
+{ "test": "test"}
+
+###
+POST https://nc-project-365212.ew.r.appspot.com/api/login
+
+###
+GET https://nc-project-365212.ew.r.appspot.com/api/profile
