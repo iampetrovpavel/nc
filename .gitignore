@@ -1,6 +1,9 @@
 #custom
 serviceAccountKey.json
-.env.*
+.env.development
+.env.production
+out
+.DS_Store
 
 # Logs
 logs

@@ -1,0 +1,15 @@
+html, body, #root, .app {
+    height: 100%;
+}
+
+html {
+    background-color: #156fba;
+}
+
+.flex {
+    display: flex;
+}
+
+.jcc {
+    justify-content: center;
+}

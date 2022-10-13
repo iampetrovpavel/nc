@@ -6,14 +6,18 @@ import Profile from './Profile'
 
 function App() {
   return (
-    <div className="App">
-        <Router>
-          <Routes>
-            <Route path="/" element={<Login/>}/>
-            <Route path="/profile" element={<Profile/>}/>
-          </Routes>
-        </Router>
-    </div>
+    <div className='app'>
+      <div className='section'>
+        <div className='container' style={{ maxWidth: '400px' }}>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route path="/profile" element={<Profile />} />
+            </Routes>
+          </Router>
+          </div>
+      </div>
+    </div >
   )
 }
 
