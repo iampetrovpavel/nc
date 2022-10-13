@@ -12,7 +12,7 @@ const API_ROUTE = process.env.API_ROUTE || '/'
 const ORIGIN = process.env.ORIGIN || ''
 
 //MIDDLEWARES
-app.use(cors({origin: [ ORIGIN ]}))
+app.use(cors({ origin: [ORIGIN] }))
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())

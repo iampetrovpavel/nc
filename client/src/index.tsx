@@ -5,11 +5,9 @@ import './css/reset.css'
 import './css/bulma.css'
 import './css/custom.css'
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   // <React.StrictMode>
-    <App />
+  <App />,
   // </React.StrictMode>
 )
