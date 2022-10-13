@@ -23,6 +23,7 @@ CLIENT Development:
  - cd client
  - run command: npm i
  - rename .env.example to .env.development
+ - make file firebase-config.ts in src directory with you credentials
  - fill REACT_APP_API in .env.development file, according to you api
  - run command: npm run start
 
@@ -30,6 +31,7 @@ CLIENT Production:
  - cd client
  - run command: npm i
  - rename .env.example to .env.production
+ - make file firebase-config.ts in src directory with you credentials
  - fill REACT_APP_API in .env.production file, according to you api
  - run command: npm run build
  - run gcloud app deploy client.yaml (don`t forget to adjust gcloud)

@@ -6,8 +6,8 @@ async function auth(req: Request, res: Response, next: NextFunction) {
   if (!token) return res.sendStatus(403)
   const decodedToken = await verifyToken(token)
   const phone = decodedToken.phone_number
-  if (!phone) res.sendStatus(403)
-  ;(req as any).phone = phone
+  if (!phone) res.sendStatus(403);
+  (req as any).phone = phone
   next()
 }
 

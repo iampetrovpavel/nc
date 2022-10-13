@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 import { fetchUser, loginUser } from './api/user'
+import { Data } from './types'
 
 interface IUserStore {}
 
@@ -13,7 +14,7 @@ type UserType = {
 class UserStore implements IUserStore {
   user: UserType | null | undefined = undefined
   loading: boolean = true
-  error: any = null
+  error: {} | null = null
 
   constructor() {
     makeAutoObservable(this)
@@ -48,7 +49,7 @@ class UserStore implements IUserStore {
       this.setData('loading', false)
     }
   }
-  setData(key: string, data: any) {
+  setData(key: string, data: Data | boolean | null) {
     const _this: any = this
     _this[key] = data
   }

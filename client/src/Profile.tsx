@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import UserStore from './store'
 import axios from 'axios'
 import { observer } from 'mobx-react-lite'
-import { useForm } from 'react-hook-form'
+import { useForm, FieldValues } from 'react-hook-form'
 import { updateUser } from './api/user'
 import validateEmail from './utils/validate-email'
 
@@ -30,7 +30,7 @@ const Profile = () => {
     if (info === null) login()
   }, [info])
 
-  async function updateProfile(data: any) {
+  async function updateProfile(data: FieldValues) {
     setUpdateSuccess(false)
     if (data.name === info?.name && data.email === info?.email) return
     if (!data.name || data.name.length === 0) return setError('Name not valid')
